@@ -1,0 +1,11 @@
+{
+    "name": "s3/spotibuz",
+    "description": "composer",
+    "type": "project",
+
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\" : "./src"
+        }
+    }
+}
