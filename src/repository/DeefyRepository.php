@@ -9,7 +9,7 @@ use track\AlbumTrack;
 
 class DeefyRepository {
 
-    private PDO $pdo;
+    private ?PDO $pdo = null;
 
     public static ?DeefyRepository $instance = null;
     public static array $config = [];
@@ -26,6 +26,7 @@ class DeefyRepository {
         );
 
     }
+
 
     public static function setConfig(string $file) : void {
 

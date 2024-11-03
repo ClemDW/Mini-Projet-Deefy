@@ -1,7 +1,10 @@
 <?php
 namespace iutnc\deefy\action;
+use iutnc\deefy\db\ConnectionFactory;
 use PDO;
-use iutnc\deefy\render\AudioListRenderer as AudioListRenderer;
+use \iutnc\deefy\auth\Auth;
+use \iutnc\deefy\exception\AuthException;
+use \iutnc\deefy\user\User;
 class SigninAction extends Action {
     
     public function __construct(){
@@ -22,15 +25,15 @@ class SigninAction extends Action {
             $bool = false;
             //on vérifie que l'utilisateur à bien rempli les champs 
             try{
-                $bool = \iutnc\deefy\auth\Auth::authenticate($e, $p);
-            }catch(\iutnc\deefy\exception\AuthException $e){
+                $bool = Auth::authenticate($e, $p);
+            }catch(AuthException $e){
                 $res = "<p>Identifiant ou mot de passe invalide</p>";
             }
 
             if($bool){
 
                 //on recupère les playlists de l'utilisateur
-                $u = new \iutnc\deefy\user\User($e, $p,1);
+                $u = new User($e, $p, 1);
                 $t =  $u->getPlaylists();
                 $res=<<<start
                     <h3>Connexion réussite pour $e</h3>
@@ -38,7 +41,7 @@ class SigninAction extends Action {
                 start;
 
 
-                $bd = DeefyRepository::getInstance();
+                $bd = ConnectionFactory::makeConnection();
                 //boucle qui affiche les playlists de l'utilisateur
                 //un peu de la force brute mais on stock pas l'id de la playliste donc on doit aller le chercher pour chaque palylsit
                 foreach ($t as $k => $value) {

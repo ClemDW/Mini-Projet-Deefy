@@ -1,15 +1,15 @@
 <?php
 
 namespace iutnc\deefy\auth;
-use iutnc\deefy\repository\DeefyRepository;
+use iutnc\deefy\db\ConnectionFactory;
 use iutnc\deefy\exception\AuthException;
 use PDO;
 class Auth{
 
     public static function authenticate(string $e, string $p):bool{
-        $bd = DeefyRepository::getInstance();
+        $bd = ConnectionFactory::makeConnection();
         $query = "select passwd, role from User where email = ? ";
-        $prep = $bd->prepare($query);
+        $prep = $bd->PDO->prepare($query);
         $prep->bindParam(1,$e);
         $bool = $prep->execute();
         $data =$prep->fetch(PDO::FETCH_ASSOC);
@@ -26,7 +26,7 @@ class Auth{
         $minimumLength = 10;
 
         //verification compte
-        $bd = DeefyRepository::getInstance();
+        $bd = ConnectionFactory::makeConnection();
         $query = "select passwd from User where email = ? ";
         $prep = $bd->prepare($query);
         $prep->bindParam(1,$e);
@@ -51,7 +51,7 @@ class Auth{
     public static function checkAccess(int $id):bool{
         $res=false;
         
-        $bd = DeefyRepository::getInstance();
+        $bd = ConnectionFactory::makeConnection();
         $query = "SELECT u.email as email from user u inner join user2playlist p on u.id = p.id_user where id_pl = ? ";
         $prep = $bd->prepare($query);
         $prep->bindParam(1,$id);
