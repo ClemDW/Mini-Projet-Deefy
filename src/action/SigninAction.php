@@ -19,11 +19,12 @@ class SigninAction extends Action {
                 <input type="text" name="password" placeholder="mot de passe">
                 <input type="submit" name="connex" value="Connexion">
                 </form>';
+
         }else{
-            $e = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $p =$_POST['password'];
+            $e = filter_var($_GET['email'], FILTER_SANITIZE_EMAIL);
+            $p =$_GET['password'];
             $bool = false;
-            //on vérifie que l'utilisateur à bien rempli les champs 
+            //on vérifie que l'utilisateur à bien rempli les champs
             try{
                 $bool = Auth::authenticate($e, $p);
             }catch(AuthException $e){
