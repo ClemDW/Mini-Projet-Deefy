@@ -2,6 +2,7 @@
 namespace iutnc\deefy\action;
 use Exception;
 use iutnc\deefy\auth\Auth;
+use iutnc\deefy\audio\lists\Playlist;
 
 class DisplayPlaylistAction extends Action {
     
