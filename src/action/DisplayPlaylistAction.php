@@ -13,20 +13,20 @@ class DisplayPlaylistAction extends Action {
     public function execute() : string{
         $res="";
         if(isset($_GET['id'])){
-            if(Auth::checkAccess(intval($_GET['id']))){
+            if(SigninAction::checkAccess(intval($_GET['id']))){
                 $p = PlayList::find(intval($_GET['id']));
                 $r  = new AudioListRenderer($p);
                 $res = $r->render();
             }else{
                 try{
                     $p = PlayList::find(intval($_GET['id']));
-                    $res = "Accès refusé : forbidden";
+                    $res = "Accès refusé";
                 }catch(Exception $e){
-                    $res = "Playliste avec id {$_GET['id']} n'éxiste pas";
+                    $res = "Playlist avec id {$_GET['id']} n'éxiste pas";
                 }
             }
         }else{
-            if($this->http_method== "GET"){
+            if($this->http_method === "GET"){
                 $res='<form method="post" action="?action=display-playlist">
                     <input type="number" name="id" placeholder="id" autofocus>
                     <input type="submit" name="connex" value="Chercher">
@@ -34,7 +34,7 @@ class DisplayPlaylistAction extends Action {
             }else{
                 $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
                 $res=<<<aff
-                <a href="?action=display-playlist&id=$id">-> Afficher PlayListe</a>
+                <a href="?action=display-playlist&id=$id">-> Afficher PlayList</a>    
                 aff;
             }
         }

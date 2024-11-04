@@ -40,7 +40,7 @@ class Dispatcher {
                 $class = new AddUserAction();
                 break;
 
-            case "register" :
+            case "connexion" :
                 $class = new SigninAction();
                 break;
 
@@ -74,7 +74,8 @@ class Dispatcher {
                         <button name='action' value='display-playlist'> Afficher la playlist </button><br><br>
                         <button name='action' value='add-playlist'> Ajouter une playlist </button><br><br>
                         <button name='action' value='add-track'> Ajouter une track </button><br><br>
-                        <button name='action' value='register'> Se connecter </button><br><br>
+                        <button name='action' value='add-user'> S'enregistrer </button><br><br>
+                        <button name='action' value='connexion'> Se connecter </button><br><br>
                     </form>
                 </div>
 

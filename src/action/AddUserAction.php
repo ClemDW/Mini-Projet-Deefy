@@ -13,7 +13,7 @@ class AddUserAction extends Action {
                 <input type="email" name="email" placeholder="email" autofocus>
                 <input type="text" name="passwd1" placeholder="password 1">
                 <input type="text" name="passwd2" placeholder="password 2">
-                <input type="submit" name="connex" value="Connéxion">
+                <input type="submit" name="connex" value="Inscription">
                 </form>';
         }else{
             $e = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -27,7 +27,7 @@ class AddUserAction extends Action {
                 <input type="email" name="email" placeholder="email" autofocus>
                 <input type="text" name="passwd1" placeholder="password 1">
                 <input type="text" name="passwd2" placeholder="password 2">
-                <input type="submit" name="connex" value="Connéxion">
+                <input type="submit" name="connex" value="Inscription">
                 </form>';
             }
         }

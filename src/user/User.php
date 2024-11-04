@@ -14,22 +14,4 @@ class User{
         $this->role = $r;
     }
 
-    public function getPlaylists(){
-        $bd = DeefyRepository::getInstance();
-
-        $query ="SELECT p.nom as nom, p.id as idp from user u inner join user2playlist u2 on u.id = u2.id_user
-                            inner join playlist p on u2.id_pl = p.id
-                            where u.email like ?";
-        $prep = $bd->prepare($query);
-        $prep->bindParam(1,$this->email);
-        $prep->execute();
-
-        $tab=[];
-        while($data=$prep->fetch(PDO::FETCH_ASSOC)){
-            $tab[$data['idp']] = new Playlist($data['nom'], []);
-        }
-
-        return $tab;
-    }
-
 }

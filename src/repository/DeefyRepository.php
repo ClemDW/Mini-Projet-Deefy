@@ -4,12 +4,13 @@ namespace iutnc\deefy\repository;
 
 use audio\track\PodcastTrack;
 use iutnc\deefy\audio\lists\Playlist;
+use iutnc\deefy\user\User;
 use PDO;
 use track\AlbumTrack;
 
 class DeefyRepository {
 
-    private ?PDO $pdo = null;
+    private ?PDO $pdo;
 
     public static ?DeefyRepository $instance = null;
     public static array $config = [];
@@ -26,7 +27,6 @@ class DeefyRepository {
         );
 
     }
-
 
     public static function setConfig(string $file) : void {
 
@@ -177,6 +177,54 @@ class DeefyRepository {
             'id_playlist' => $playlist,
             'id_track' => $track
         ]);
+
+    }
+
+    public function getPlaylists(string $email){
+
+        $query ="SELECT p.nom as nom, p.id as idp from user u inner join user2playlist u2 on u.id = u2.id_user
+                            inner join playlist p on u2.id_pl = p.id
+                            where u.email like ?";
+        $prep = $this->pdo->prepare($query);
+        $prep->bindParam(1,$email);
+        $prep->execute();
+
+        $tab=[];
+        while($data=$prep->fetch(PDO::FETCH_ASSOC)){
+            $tab[$data['idp']] = new Playlist($data['nom'], []);
+        }
+
+        return $tab;
+    }
+
+    public function checkEmail(string $email) : array{
+
+        $sql = "select passwd, role from User where email = ?";
+
+        $prep = $this->pdo->prepare($sql);
+        $prep->bindParam(1,$email);
+        $prep->execute();
+
+        $data = $prep->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($data)){
+            $res = [];
+        } else {
+            $res = ["role"=>$data['role'], "passwd"=>$data['passwd']];
+        }
+
+        return $res;
+
+    }
+
+    public function insertionUser(string $email, string $passwd, string $role) {
+
+        $sql = "INSERT INTO user (email, passwd, role) values(?,?,?)";
+        $prep = $this->pdo->prepare($sql);
+        $prep->bindParam(1,$email);
+        $prep->bindParam(2,$passwd);
+        $prep->bindParam(3,$role);
+        $prep->execute();
 
     }
 

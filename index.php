@@ -18,7 +18,7 @@ use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\dispatch\Dispatcher;
 
 // définir la configuration BD 1 fois au démarrage de l'application \
-\iutnc\deefy\db\ConnectionFactory::setConfig('db.config.ini');
+DeefyRepository::setConfig('db.config.ini');
 session_start();
 
 $dispatcher = new Dispatcher();
