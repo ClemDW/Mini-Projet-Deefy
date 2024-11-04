@@ -177,7 +177,15 @@ class DeefyRepository {
             'id_playlist' => $playlist,
             'id_track' => $track
         ]);
-
     }
+
+    public function getUserPlaylist(string $email, int $role) : Playlist[] {
+        if ($role === 100) {
+
+        } else {
+
+        }
+        // TODO
+        // test du role 1 normal, 100 admin
 
 }
