@@ -1,14 +1,11 @@
 <?php
 namespace iutnc\deefy\action;
-<<<<<<< HEAD
 use iutnc\deefy\auth\Auth;
-=======
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
 use iutnc\deefy\repository\DeefyRepository;
 use PDO;
 use \iutnc\deefy\exception\AuthException;
 class SigninAction extends Action {
-    
+
     public function __construct(){
         parent::__construct();
     }
@@ -18,11 +15,7 @@ class SigninAction extends Action {
         $dr = DeefyRepository::getInstance();
 
         $res="";
-<<<<<<< HEAD
         if($this->http_method == "GET"){
-=======
-        if($this->http_method === "GET"){
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
             $res='<form method="post" action="?action=register">
                 <input type="email" name="email" placeholder="email" autofocus>
                 <input type="text" name="password" placeholder="mot de passe">
@@ -30,14 +23,8 @@ class SigninAction extends Action {
                 </form>';
 
         }else{
-<<<<<<< HEAD
             $e = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $p =$_POST['password'];
-=======
-            echo "signing else cp1";
-            $e = filter_var($_GET['email'], FILTER_SANITIZE_EMAIL);
-            $p =$_GET['password'];
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
             $bool = false;
             //on vérifie que l'utilisateur à bien rempli les champs
             try{
@@ -46,17 +33,10 @@ class SigninAction extends Action {
                 $res = "<p>Identifiant ou mot de passe invalide</p>";
             }
 
-            echo "signing else cp2";
-
             if($bool){
 
                 //on recupère les playlists de l'utilisateur
-<<<<<<< HEAD
                 $t =  $dr->getPlaylists($e);
-=======
-                $u = new User($e, $p, $_SESSION['user']['email']);
-                $t =  $u->getPlaylists();
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
                 $res=<<<start
                     <h3>Connexion réussie pour $e</h3>
                     <h3>Playlists de l'utilisateur : </h3>
@@ -71,16 +51,15 @@ class SigninAction extends Action {
                     $playlists = $this->pdo->prepare($query);
                     $playlists -> bindParam(1, $nom);
                     $playlists -> execute();
-            
+
                     while($play=$playlists->fetch(PDO::FETCH_ASSOC)){
-                        $res.= '<a href="?action=display-playlist&id='.$play['id'].'"> - '.$nom.'</a>';                    
-                    }                    
+                        $res.= '<a href="?action=display-playlist&id='.$play['id'].'"> - '.$nom.'</a>';
+                    }
                 }
             }
         }
         return $res;
     }
-<<<<<<< HEAD
 
     public function checkAccess(int $id):bool{
         $res=false;
@@ -99,6 +78,3 @@ class SigninAction extends Action {
     }
 
 }
-=======
-}
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad

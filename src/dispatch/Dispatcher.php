@@ -6,7 +6,7 @@ use \iutnc\deefy\action\DefaultAction;
 use \iutnc\deefy\action\DisplayPlaylistAction;
 use \iutnc\deefy\action\AddPlaylistAction;
 use \iutnc\deefy\action\AddPodcastTrackAction;
-use \iutnc\deefy\action\SigninAction;
+use iutnc\deefy\action\SigninAction;
 use \iutnc\deefy\action\AddUserAction;
 
 
@@ -40,12 +40,7 @@ class Dispatcher {
                 $class = new AddUserAction();
                 break;
 
-<<<<<<< HEAD
             case "connexion" :
-=======
-            case "register" :
-                echo "dis : register";
->>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
                 $class = new SigninAction();
                 break;
 
