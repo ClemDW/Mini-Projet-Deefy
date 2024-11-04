@@ -14,4 +14,13 @@ class User{
         $this->role = $r;
     }
 
+<<<<<<< HEAD
 }
+=======
+    public function getPlaylists(){
+        $bd = DeefyRepository::getInstance();
+        $bd->getUserPlaylist($this->email, $this->$role); 
+    }
+
+}
+>>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad

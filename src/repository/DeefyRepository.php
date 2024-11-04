@@ -177,9 +177,9 @@ class DeefyRepository {
             'id_playlist' => $playlist,
             'id_track' => $track
         ]);
-
     }
 
+<<<<<<< HEAD
     public function getPlaylists(string $email){
 
         $query ="SELECT p.nom as nom, p.id as idp from user u inner join user2playlist u2 on u.id = u2.id_user
@@ -229,3 +229,15 @@ class DeefyRepository {
     }
 
 }
+=======
+    public function getUserPlaylist(string $email, int $role) : Playlist[] {
+        if ($role === 100) {
+
+        } else {
+
+        }
+        // TODO
+        // test du role 1 normal, 100 admin
+
+}
+>>>>>>> 281225a5f3c594494fb378b5390ccf638107bbad
