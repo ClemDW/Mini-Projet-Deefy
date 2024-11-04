@@ -6,7 +6,7 @@ use \iutnc\deefy\action\DefaultAction;
 use \iutnc\deefy\action\DisplayPlaylistAction;
 use \iutnc\deefy\action\AddPlaylistAction;
 use \iutnc\deefy\action\AddPodcastTrackAction;
-use iutnc\deefy\action\SigninAction;
+use \iutnc\deefy\action\SigninAction;
 use \iutnc\deefy\action\AddUserAction;
 
 
