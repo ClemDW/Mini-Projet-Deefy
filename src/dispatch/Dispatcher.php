@@ -41,6 +41,7 @@ class Dispatcher {
                 break;
 
             case "register" :
+                echo "dis : register";
                 $class = new SigninAction();
                 break;
 
