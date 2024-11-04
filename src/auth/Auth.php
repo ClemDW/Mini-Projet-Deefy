@@ -7,7 +7,8 @@ use PDO;
 class Auth{
 
     public static function authenticate(string $e, string $p):bool{
-        $bd = ConnectionFactory::makeConnection();
+        $bd = ConnectionFactory::makeConnection(); // TODO method getInfo(email) : hash(psw), role qui return liste vide si inexistant
+        // tout mettre reposi
         $query = "select passwd, role from User where email = ? ";
         $prep = $bd->PDO->prepare($query);
         $prep->bindParam(1,$e);
@@ -15,11 +16,10 @@ class Auth{
         $data =$prep->fetch(PDO::FETCH_ASSOC);
         $hash=$data['passwd'];
         if (!password_verify($p, $hash)&&$bool)throw new AuthException("Mot de passe Incorrect");
-        $_SESSION['user']['id']=$e;
+        $_SESSION['user']['email']=$e;
         $_SESSION['user']['role']=$data['role'];
         return true;
     }
-
     
     public static function register(string $e, string $p):String{
         $res = "Echec inscription";
@@ -27,7 +27,7 @@ class Auth{
 
         //verification compte
         $bd = ConnectionFactory::makeConnection();
-        $query = "select passwd from User where email = ? ";
+        $query = "select passwd, role from User where email = ? ";
         $prep = $bd->prepare($query);
         $prep->bindParam(1,$e);
         $prep->execute();
