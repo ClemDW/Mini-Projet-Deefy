@@ -37,7 +37,7 @@ class SigninAction extends Action {
             if($bool){
 
                 //on recupère les playlists de l'utilisateur
-                $u = new User($e, $p, 1);
+                $u = new User($e, $p, $_SESSION['user']['email']);
                 $t =  $u->getPlaylists();
                 $res=<<<start
                     <h3>Connexion réussite pour $e</h3>
