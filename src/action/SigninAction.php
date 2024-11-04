@@ -1,6 +1,6 @@
 <?php
 namespace iutnc\deefy\action;
-use iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\repository\DeefyRepository;
 use PDO;
 use \iutnc\deefy\auth\Auth;
 use \iutnc\deefy\exception\AuthException;
@@ -13,7 +13,7 @@ class SigninAction extends Action {
 
     public function execute() : string{
         $res="";
-        if($this->http_method == "GET"){
+        if($this->http_method === "GET"){
             $res='<form method="post" action="?action=register">
                 <input type="email" name="email" placeholder="email" autofocus>
                 <input type="text" name="password" placeholder="mot de passe">
@@ -21,6 +21,7 @@ class SigninAction extends Action {
                 </form>';
 
         }else{
+            echo "signing else cp1";
             $e = filter_var($_GET['email'], FILTER_SANITIZE_EMAIL);
             $p =$_GET['password'];
             $bool = false;
@@ -30,6 +31,8 @@ class SigninAction extends Action {
             }catch(AuthException $e){
                 $res = "<p>Identifiant ou mot de passe invalide</p>";
             }
+
+            echo "signing else cp2";
 
             if($bool){
 
