@@ -189,7 +189,6 @@ class DeefyRepository {
         $prep->bindParam(1,$email);
         $prep->execute();
 
-        $tab=[];
         while($data=$prep->fetch(PDO::FETCH_ASSOC)){
             $tab[$data['idp']] = new Playlist($data['nom'], []);
         }

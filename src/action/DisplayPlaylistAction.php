@@ -12,8 +12,9 @@ class DisplayPlaylistAction extends Action {
 
     public function execute() : string{
         $res="";
+        $sa = new SigninAction();
         if(isset($_GET['id'])){
-            if(SigninAction::checkAccess(intval($_GET['id']))){
+            if($sa->checkAccess(intval($_GET['id']))){
                 $p = PlayList::find(intval($_GET['id']));
                 $r  = new AudioListRenderer($p);
                 $res = $r->render();

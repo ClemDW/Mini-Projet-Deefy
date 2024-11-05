@@ -16,9 +16,9 @@ class SigninAction extends Action {
 
         $res="";
         if($this->http_method == "GET"){
-            $res='<form method="post" action="?action=register">
+            $res='<form method="POST" action="?action=connexion">
                 <input type="email" name="email" placeholder="email" autofocus>
-                <input type="text" name="password" placeholder="mot de passe">
+                <input type="password" name="password" placeholder="mot de passe">
                 <input type="submit" name="connex" value="Se connecter">
                 </form>';
 

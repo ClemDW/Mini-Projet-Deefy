@@ -8,7 +8,6 @@ use PDO;
 class Auth {
 
     public static function authenticate(string $e, string $p) : bool{
-
         $d = DeefyRepository::getInstance();
 
         // regarde si l'email existe
