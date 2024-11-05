@@ -2,7 +2,7 @@
 namespace iutnc\deefy\action;
 use iutnc\deefy\audio\tracks\PodcastTrack as PodcastTrack;
 use iutnc\deefy\render\AudioListRenderer as AudioListRenderer;
-class  AddPodcasttrackAction extends Action {
+class AddPodcastTrackAction extends Action {
     
     public function __construct(){
         parent::__construct();
@@ -27,8 +27,7 @@ class  AddPodcasttrackAction extends Action {
                 $upload_dir ='audio/';
                 $tmp = $_FILES['file']['tmp_name'];
                 echo $tmp;
-                if (($_FILES['file']['error'] === UPLOAD_ERR_OK) &&
-                    ($_FILES['file']['type'] === 'audio/mpeg') ) {
+                if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
                     $dest = $upload_dir.$_FILES['file']['name'];
                     move_uploaded_file($tmp, $dest);
                 }
