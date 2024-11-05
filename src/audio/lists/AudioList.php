@@ -2,6 +2,8 @@
 
 namespace iutnc\deefy\audio\lists;
 
+use iutnc\deefy\exception\InvalidPropertyNameException;
+
 require_once('src/exception/InvalidPropertyNameException.php');
 
 class AudioList {
