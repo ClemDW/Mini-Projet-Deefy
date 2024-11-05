@@ -9,7 +9,6 @@ use iutnc\deefy\audio\tracks\AudioTrack as AudioTrack;
 use iutnc\deefy\audio\tracks\AlbumTrack as AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack as PodcastTrack;
 use iutnc\deefy\audio\lists\AudioList as AudioList;
-use iutnc\deefy\db\ConnectionFactory;
 class PlayList extends AudioList{
 
     public function __construct(String $nom, iterable $tab){
@@ -19,7 +18,7 @@ class PlayList extends AudioList{
     public function ajouterPiste(AudioTrack $piste):void{
         $this->list[] = $piste;
         $this->dureeTotale += $piste->duree;
-        $this->nbPiste++;
+        $this->nbPistes++;
     }
 
     public function suprimerPiste(int $indice):void{
@@ -79,5 +78,4 @@ class PlayList extends AudioList{
         $p->getTrackList();
         return $p;
     }
-
 }
