@@ -3,6 +3,7 @@ namespace iutnc\deefy\action;
 use Exception;
 use iutnc\deefy\auth\Auth;
 use iutnc\deefy\audio\lists\Playlist;
+use iutnc\deefy\render\AudioListRenderer;
 
 class DisplayPlaylistAction extends Action {
     

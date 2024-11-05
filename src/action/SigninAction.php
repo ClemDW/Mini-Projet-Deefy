@@ -3,7 +3,8 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\auth\Auth;
 use iutnc\deefy\repository\DeefyRepository;
 use PDO;
-use \iutnc\deefy\exception\AuthException;
+use iutnc\deefy\action\Action;
+use iutnc\deefy\exception\AuthException;
 class SigninAction extends Action {
 
     public function __construct(){
@@ -36,7 +37,7 @@ class SigninAction extends Action {
             if($bool){
 
                 //on recupère les playlists de l'utilisateur
-                $t =  $dr->getPlaylists($e);
+                $t = $dr->getPlaylists($e);
                 $res=<<<start
                     <h3>Connexion réussie pour $e</h3>
                     <h3>Playlists de l'utilisateur : </h3>

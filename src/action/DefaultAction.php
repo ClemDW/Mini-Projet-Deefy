@@ -2,7 +2,7 @@
 
 namespace iutnc\deefy\action;
 
-use \iutnc\deefy\action\Action;
+use iutnc\deefy\action\Action;
 
 class DefaultAction extends Action {
 
