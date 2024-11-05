@@ -1,7 +1,6 @@
 <?php
 
 namespace iutnc\deefy\auth;
-use iutnc\deefy\db\ConnectionFactory;
 use iutnc\deefy\exception\AuthException;
 use iutnc\deefy\repository\DeefyRepository;
 use PDO;
