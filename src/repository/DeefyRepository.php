@@ -2,11 +2,13 @@
 
 namespace iutnc\deefy\repository;
 
-use audio\track\PodcastTrack;
+use Exception;
+use iutnc\deefy\audio\tracks\PodcastTrack;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\user\User;
 use PDO;
-use track\AlbumTrack;
+use iutnc\deefy\audio\tracks\AlbumTrack;
+use PDOException;
 
 class DeefyRepository {
 
@@ -146,7 +148,7 @@ class DeefyRepository {
             'auteur' => $track->__get('auteur'),
             'date' => $track->__get('date'),
             'duree' => $track->__get('duree'),
-            'genre' => PodcastTrack::getGenreAsString($track->genre)
+            'genre' => $track->__get('genre')
         ]);
 
         return $track;
@@ -218,6 +220,8 @@ class DeefyRepository {
 
     public function insertionUser(string $email, string $passwd, string $role) {
 
+        $message = "Utilisateur ajouté";
+        echo "<script type='text/javascript'>alert('$message');</script>";
         $sql = "INSERT INTO user (email, passwd, role) values(?,?,?)";
         $prep = $this->pdo->prepare($sql);
         $prep->bindParam(1,$email);
