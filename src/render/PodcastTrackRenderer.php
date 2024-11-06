@@ -2,6 +2,7 @@
 
 namespace iutnc\deefy\render;
 
+use Exception;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 
 require_once 'Renderer.php';
@@ -53,6 +54,10 @@ class PodcastTrackRenderer implements Renderer {
                         </p>
 
                     </div>";
+                break;
+
+            default:
+                return "PodcastTrackRenderer : Selecteur inconnu";
                 break;
 
         }

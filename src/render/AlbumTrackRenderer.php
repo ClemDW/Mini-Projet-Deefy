@@ -57,6 +57,10 @@ class AlbumTrackRenderer implements Renderer {
                     </div>";
                 break;
 
+            default:
+                return "AlbumTrackRenderer : Selecteur inconnu";
+                break;
+
         }
     }
 }
