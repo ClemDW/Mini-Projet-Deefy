@@ -12,7 +12,7 @@ use iutnc\deefy\audio\tracks\PodcastTrack as PodcastTrack;
 use iutnc\deefy\audio\lists\AudioList as AudioList;
 class Playlist extends AudioList{
 
-    public function __construct(String $nom, iterable $tab){
+    public function __construct(String $nom, array $tab){
         parent::__construct($nom, $tab);
     }
 
@@ -40,7 +40,7 @@ class Playlist extends AudioList{
         while($trc=$df->trackBD($this->nom)){
             $t = null;
             if($trc['type']==="A"){
-                $t = new AlbumTrack($trc['titre'], $trc['filename']);
+                $t = new AlbumTrack($trc['titre'], $trc['filename'], $trc['id_album'], $trc['id']);
                 $t->__set("artiste",$trc['artiste_album']);
                 $t->__set("genre", $trc['genre']);
                 $t->__set("duree",$trc['duree'] );
