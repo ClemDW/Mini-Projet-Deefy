@@ -85,7 +85,7 @@ class DeefyRepository {
 
     }
 
-    // Methode pour se connecter
+    /* Methode pour se connecter
     public function login($email, $password){
 
         // Hachage du mot de passe
@@ -122,7 +122,7 @@ class DeefyRepository {
             }
         }
         return false;
-    }
+    }*/
 
     public function saveEmptyPlaylist(Playlist $playlist) : Playlist {
 
@@ -133,6 +133,16 @@ class DeefyRepository {
         $playlist->setId($this->pdo->lastInsertId());
 
         return $playlist;
+
+    }
+
+    public function user2playlist(Playlist $playlist) : void {
+
+        $sql = "INSERT INTO user2playlist (id_user, id_pl) values (?, ?)";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(1, $_SESSION['user']);
+        $statement->bindParam(2, $playlist->getId());
+        $statement->execute();
 
     }
 
@@ -198,7 +208,7 @@ class DeefyRepository {
 
     public function checkEmail(string $email) : array{
 
-        $sql = "select passwd, role from User where email = ?";
+        $sql = "select passwd, role from user where email = ?";
 
         $prep = $this->pdo->prepare($sql);
         $prep->bindParam(1,$email);
@@ -251,9 +261,9 @@ class DeefyRepository {
         $track = $this->pdo->prepare($query);
         $track -> bindParam(1, $nom);
         $track -> execute();
-        $track->fetch(PDO::FETCH_ASSOC);
+        $data = $track->fetchAll(PDO::FETCH_ASSOC);
 
-        return $track;
+        return $data;
 
     }
 
@@ -264,6 +274,30 @@ class DeefyRepository {
         $prep->bindParam(1,$id);
         $prep->execute();
         $data = $prep->fetchall(PDO::FETCH_ASSOC);
+
+        return $data;
+
+    }
+
+    public function selectIDPlaylist($nom) : string{
+
+        $query ="SELECT id from playlist p where p.nom like ?";
+        $playlists = $this->pdo->prepare($query);
+        $playlists -> bindParam(1, $nom);
+        $playlists -> execute();
+        $playlists->fetch(PDO::FETCH_ASSOC);
+
+        return $playlists;
+
+    }
+
+    public function selectIDUser($email) : int {
+
+        $sql = "SELECT id from user where email = ?";
+        $prep = $this->pdo->prepare($sql);
+        $prep->bindParam(1,$email);
+        $prep->execute();
+        $data = $prep->fetch(PDO::FETCH_ASSOC);
 
         return $data;
 

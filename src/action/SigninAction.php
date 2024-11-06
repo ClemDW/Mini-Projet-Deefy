@@ -35,6 +35,8 @@ class SigninAction extends Action {
             }
 
             if($bool){
+                // On met l'utilisateur en session
+                $_SESSION['user'] = $dr->selectIDUser($e);
 
                 //on recupère les playlists de l'utilisateur
                 $t = $dr->getPlaylists($e);
@@ -45,15 +47,10 @@ class SigninAction extends Action {
                 start;
 
                 //boucle qui affiche les playlists de l'utilisateur
-                //un peu de la force brute mais on stock pas l'id de la playliste donc on doit aller le chercher pour chaque palylsit
+                //un peu de la force brute mais on stock pas l'id de la playlist donc on doit aller le chercher pour chaque palylsit
                 foreach ($t as $k => $value) {
                     $nom = $value->__get("nom");
-                    $query ="SELECT id from playlist p where p.nom like ?";
-                    $playlists = $this->pdo->prepare($query);
-                    $playlists -> bindParam(1, $nom);
-                    $playlists -> execute();
-
-                    while($play=$playlists->fetch(PDO::FETCH_ASSOC)){
+                    while($play=$dr->selectIDPlaylist($nom)){
                         $res.= '<a href="?action=display-playlist&id='.$play['id'].'"> - '.$nom.'</a>';
                     }
                 }
