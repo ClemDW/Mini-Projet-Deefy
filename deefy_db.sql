@@ -27,8 +27,8 @@ CREATE TABLE `track` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `User`;
-CREATE TABLE `User` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(256) NOT NULL,
   `passwd` varchar(256) NOT NULL,
@@ -53,6 +53,6 @@ CREATE TABLE `user2playlist` (
   `id_pl` int(11) NOT NULL,
   PRIMARY KEY (`id_user`,`id_pl`),
   KEY `id_pl` (`id_pl`),
-  CONSTRAINT `user2playlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `User` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `user2playlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `user2playlist_ibfk_2` FOREIGN KEY (`id_pl`) REFERENCES `playlist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
