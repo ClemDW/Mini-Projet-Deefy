@@ -3,7 +3,8 @@ declare(strict_types=1);
 namespace iutnc\deefy\audio\lists;
 
 require_once 'vendor/autoload.php';
-use PDO;
+
+use iutnc\deefy\repository\DeefyRepository;
 use Exception;
 use iutnc\deefy\audio\tracks\AudioTrack as AudioTrack;
 use iutnc\deefy\audio\tracks\AlbumTrack as AlbumTrack;
@@ -21,7 +22,7 @@ class PlayList extends AudioList{
         $this->nbPistes++;
     }
 
-    public function suprimerPiste(int $indice):void{
+    public function supprimerPiste(int $indice):void{
         $this->list->unset($indice);
     }
 
@@ -33,14 +34,10 @@ class PlayList extends AudioList{
     }
 
     public function getTrackList():array{
-        $bd = \iutnc\deefy\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * from playlist p inner join playlist2track p2 on p2.id_track = p.id inner join track t on p2.id_track = t.id  where p.nom like ?";
-        $track = $bd->prepare($query);
-        $track -> bindParam(1, $this->nom);
-        $track -> execute();
-    
+
         $tab=[];
-        while($trc=$track->fetch(PDO::FETCH_ASSOC)){
+        $df = DeefyRepository::getInstance();
+        while($trc=$df->trackBD($this->nom)){
             $t = null;
             if($trc['type']==="A"){
                 $t = new AlbumTrack($trc['titre'], $trc['filename']);
@@ -64,15 +61,11 @@ class PlayList extends AudioList{
     }
 
     public static function find(int $id):mixed{
-        $bd = ConnectionFactory::makeConnection();
-        $query ="SELECT nom from playlist where id = ?";
-        $prep = $bd->prepare($query);
-        $prep->bindParam(1,$id);
-        $prep->execute();
-        $data = $prep->fetchall(PDO::FETCH_ASSOC);
-        
+        $bd = DeefyRepository::getInstance();
+        $data = $bd->playlistFind($id);
+
         if(sizeof($data)<=0){
-            throw new Exception("Playliste inconnue");
+            throw new Exception("Playlist inconnue");
         }
         $p = new PlayList($data[0]['nom'], []);
         $p->getTrackList();

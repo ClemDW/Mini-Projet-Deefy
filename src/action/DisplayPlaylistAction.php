@@ -4,6 +4,7 @@ use Exception;
 use iutnc\deefy\auth\Auth;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\render\AudioListRenderer;
+use iutnc\deefy\repository\DeefyRepository;
 
 class DisplayPlaylistAction extends Action {
     
@@ -13,7 +14,7 @@ class DisplayPlaylistAction extends Action {
 
     public function execute() : string{
         $res="";
-        $sa = new SigninAction();
+        $sa = DeefyRepository::getInstance();
         if(isset($_GET['id'])){
             if($sa->checkAccess(intval($_GET['id']))){
                 $p = PlayList::find(intval($_GET['id']));

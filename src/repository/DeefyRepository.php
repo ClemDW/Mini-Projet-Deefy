@@ -165,8 +165,6 @@ class DeefyRepository {
 
         ]);
 
-        $track->setId($this->pdo->lastInsertId());
-
         return $track;
     }
 
@@ -228,6 +226,46 @@ class DeefyRepository {
         $prep->bindParam(2,$passwd);
         $prep->bindParam(3,$role);
         $prep->execute();
+
+    }
+
+    public function checkAccess(int $id):bool{
+        $res=false;
+
+        $query = "SELECT u.email as email from user u inner join user2playlist p on u.id = p.id_user where id_pl = ? ";
+        $prep = $this->pdo->prepare($query);
+        $prep->bindParam(1,$id);
+        $bool = $prep->execute();
+        $d = $prep->fetchall(PDO::FETCH_ASSOC);
+        if($bool && sizeof($d)>0){
+            if($d[0]['email'] === $_SESSION['user']['id']||$_SESSION['user']['role']===100){
+                $res=true;
+            }
+        }
+        return $res;
+    }
+
+    public function trackBD($nom) : array {
+
+        $query ="SELECT * from playlist p inner join playlist2track p2 on p2.id_track = p.id inner join track t on p2.id_track = t.id  where p.nom like ?";
+        $track = $this->pdo->prepare($query);
+        $track -> bindParam(1, $nom);
+        $track -> execute();
+        $track->fetch(PDO::FETCH_ASSOC);
+
+        return $track;
+
+    }
+
+    public function playlistFind($id) : array {
+
+        $query ="SELECT nom from playlist where id = ?";
+        $prep = $this->pdo->prepare($query);
+        $prep->bindParam(1,$id);
+        $prep->execute();
+        $data = $prep->fetchall(PDO::FETCH_ASSOC);
+
+        return $data;
 
     }
 

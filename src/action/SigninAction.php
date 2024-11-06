@@ -62,20 +62,4 @@ class SigninAction extends Action {
         return $res;
     }
 
-    public function checkAccess(int $id):bool{
-        $res=false;
-
-        $query = "SELECT u.email as email from user u inner join user2playlist p on u.id = p.id_user where id_pl = ? ";
-        $prep = $this->pdo->prepare($query);
-        $prep->bindParam(1,$id);
-        $bool = $prep->execute();
-        $d = $prep->fetchall(PDO::FETCH_ASSOC);
-        if($bool && sizeof($d)>0){
-            if($d[0]['email'] === $_SESSION['user']['id']||$_SESSION['user']['role']===100){
-                $res=true;
-            }
-        }
-        return $res;
-    }
-
 }
