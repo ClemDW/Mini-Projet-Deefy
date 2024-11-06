@@ -43,7 +43,6 @@ class SigninAction extends Action {
                 $res=<<<start
                     <h3>Connexion réussie pour $e</h3>
                     <h3>Playlists de l'utilisateur : </h3>
-                    <p>$t</p>
                 start;
 
                 //boucle qui affiche les playlists de l'utilisateur
@@ -51,7 +50,7 @@ class SigninAction extends Action {
                 foreach ($t as $k => $value) {
                     $nom = $value->__get('nom');
                     while($play=$dr->selectIDPlaylist($nom)){
-                        $res.= '<a href="?action=display-playlist&id='.$play['id'].'"> - '.$nom.'</a>';
+                        $res.= '<a href="?action=display-playlist&id='.$play.'"> - '.$nom.'</a>';
                     }
                     echo $play;
                 }
