@@ -126,23 +126,40 @@ class DeefyRepository {
 
     public function saveEmptyPlaylist(Playlist $playlist) : Playlist {
 
-        $sql = 'INSERT INTO playlist(nom) VALUES(:nom)';
+        $playlist->__get('nom');
 
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute(['nom' => $playlist->nom]);
-        $playlist->setId($this->pdo->lastInsertId());
+        $req = "SELECT COUNT(*) FROM playlist WHERE nom = ? ";
+        $stmt = $this->pdo->prepare($req);
+        $stmt->bindParam(1, $nom);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
 
-        return $playlist;
+        if($count != 0){
+            throw new Exception("Le nom de la playlist n'est pas disponible");
+        } else {
+
+            $sql = 'INSERT INTO playlist(nom) VALUES(:nom)';
+
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute(['nom' => $playlist->nom]);
+            $playlist->setId($this->pdo->lastInsertId());
+
+            return $playlist;
+        }
 
     }
 
     public function user2playlist(Playlist $playlist) : void {
 
-        $sql = "INSERT INTO user2playlist (id_user, id_pl) values (?, ?)";
+        $res = $this->findIDPlaylist($playlist);
+
+        echo $_SESSION['user'];
+
+        $sql = "INSERT INTO user2playlist(id_user, id_pl) values (?, ?)";
         $statement = $this->pdo->prepare($sql);
         $statement->bindParam(1, $_SESSION['user']);
-        $statement->bindParam(2, $playlist->getId());
-        $statement->execute();
+        $statement->bindParam(2, $res);
+        //$statement->execute();
 
     }
 
@@ -287,7 +304,7 @@ class DeefyRepository {
         $playlists -> execute();
         $playlists->fetch(PDO::FETCH_ASSOC);
 
-        return $playlists;
+        return $playlists['nom'];
 
     }
 
@@ -299,7 +316,22 @@ class DeefyRepository {
         $prep->execute();
         $data = $prep->fetch(PDO::FETCH_ASSOC);
 
-        return $data;
+        return $data['id'];
+
+    }
+
+    public function findIDPlaylist(Playlist $playlist) : int {
+
+        $nom = $playlist->__get('nom');
+
+        $sql = "SELECT id from playlist where nom = ?";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(1,$nom);
+        $statement->execute();
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $data['id'];
 
     }
 

@@ -15,13 +15,14 @@ class AddPlaylistAction extends Action {
             $res = <<<addP
                 <form method="post" action="?action=add-playlist">
                 <input type="text" name="nom" placeholder="nom" autofocus>
-                <input type="submit" name="creer" value="Créer PlayListe">
+                <input type="submit" name="creer" value="Créer Playlist">
                 </form>
                 addP;
         }else{
             $df = DeefyRepository::getInstance();
             $l = new Playlist(filter_var($_POST['nom'], FILTER_SANITIZE_STRING), []);
             $df->saveEmptyPlaylist($l);
+            $df->user2playlist($l);
 
             $_SESSION['user']['playlist'] = serialize($l);
             $r = new AudioListRenderer($l);
