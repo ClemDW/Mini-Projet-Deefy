@@ -17,12 +17,12 @@ class DisplayPlaylistAction extends Action {
         $sa = DeefyRepository::getInstance();
         if(isset($_GET['id'])){
             if($sa->checkAccess(intval($_GET['id']))){
-                $p = PlayList::find(intval($_GET['id']));
+                $p = Playlist::find(intval($_GET['id']));
                 $r  = new AudioListRenderer($p);
                 $res = $r->render();
             }else{
                 try{
-                    $p = PlayList::find(intval($_GET['id']));
+                    $p = Playlist::find(intval($_GET['id']));
                     $res = "Accès refusé";
                 }catch(Exception $e){
                     $res = "Playlist avec id {$_GET['id']} n'éxiste pas";

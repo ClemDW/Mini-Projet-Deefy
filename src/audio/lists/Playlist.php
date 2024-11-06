@@ -10,7 +10,7 @@ use iutnc\deefy\audio\tracks\AudioTrack as AudioTrack;
 use iutnc\deefy\audio\tracks\AlbumTrack as AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack as PodcastTrack;
 use iutnc\deefy\audio\lists\AudioList as AudioList;
-class PlayList extends AudioList{
+class Playlist extends AudioList{
 
     public function __construct(String $nom, iterable $tab){
         parent::__construct($nom, $tab);
@@ -67,7 +67,7 @@ class PlayList extends AudioList{
         if(sizeof($data)<=0){
             throw new Exception("Playlist inconnue");
         }
-        $p = new PlayList($data[0]['nom'], []);
+        $p = new Playlist($data[0]['nom'], []);
         $p->getTrackList();
         return $p;
     }
