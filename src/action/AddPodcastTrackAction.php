@@ -2,6 +2,8 @@
 namespace iutnc\deefy\action;
 use iutnc\deefy\audio\tracks\PodcastTrack as PodcastTrack;
 use iutnc\deefy\render\AudioListRenderer as AudioListRenderer;
+
+// Ne fonctionne pas car on stocke les id de playlist uniquement en BD, donc on ne connait pas l'ID de la playlist courant en session
 class AddPodcastTrackAction extends Action {
     
     public function __construct(){

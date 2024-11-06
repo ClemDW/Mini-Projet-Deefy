@@ -85,7 +85,7 @@ class DeefyRepository {
 
     }
 
-    /* Methode pour se connecter
+    // Methode pour se connecter
     public function login($email, $password){
 
         // Hachage du mot de passe
@@ -122,7 +122,7 @@ class DeefyRepository {
             }
         }
         return false;
-    }*/
+    }
 
     public function saveEmptyPlaylist(Playlist $playlist) : Playlist {
 
@@ -256,7 +256,9 @@ class DeefyRepository {
 
     }
 
+    // Ne fonctionne pas, cause user2playlist mal setup
     public function checkAccess(int $id):bool{
+        /**
         $res=false;
 
         $query = "SELECT u.email as email from user u inner join user2playlist p on u.id = p.id_user where id_pl = ? ";
@@ -270,6 +272,8 @@ class DeefyRepository {
             }
         }
         return $res;
+         * */
+        return true;
     }
 
     public function trackBD($nom) : array {
