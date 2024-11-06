@@ -153,13 +153,13 @@ class DeefyRepository {
 
         $res = $this->findIDPlaylist($playlist);
 
-        echo $_SESSION['user'];
+        echo $_SESSION['id'];
 
         $sql = "INSERT INTO user2playlist(id_user, id_pl) values (?, ?)";
         $statement = $this->pdo->prepare($sql);
-        $statement->bindParam(1, $_SESSION['user']);
+        $statement->bindParam(1, $_SESSION['user']['id']);
         $statement->bindParam(2, $res);
-        //$statement->execute();
+        $statement->execute();
 
     }
 
@@ -265,7 +265,7 @@ class DeefyRepository {
         $bool = $prep->execute();
         $d = $prep->fetchall(PDO::FETCH_ASSOC);
         if($bool && sizeof($d)>0){
-            if($d[0]['email'] === $_SESSION['user']['id']||$_SESSION['user']['role']===100){
+            if($d[0]['email'] === $_SESSION['id']||$_SESSION['role']===100){
                 $res=true;
             }
         }
@@ -296,15 +296,15 @@ class DeefyRepository {
 
     }
 
-    public function selectIDPlaylist($nom) : string{
+    public function selectIDPlaylist($nom) : string {
 
         $query ="SELECT id from playlist p where p.nom like ?";
         $playlists = $this->pdo->prepare($query);
         $playlists -> bindParam(1, $nom);
         $playlists -> execute();
-        $playlists->fetch(PDO::FETCH_ASSOC);
+        $res=$playlists->fetch(PDO::FETCH_ASSOC);
 
-        return $playlists['nom'];
+        return $res['id'];
 
     }
 

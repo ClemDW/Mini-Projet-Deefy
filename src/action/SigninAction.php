@@ -36,7 +36,7 @@ class SigninAction extends Action {
 
             if($bool){
                 // On met l'utilisateur en session
-                $_SESSION['user'] = $dr->selectIDUser($e);
+                $_SESSION['id'] = $dr->selectIDUser($e);
 
                 //on recupère les playlists de l'utilisateur
                 $t = $dr->getPlaylists($e);
@@ -49,10 +49,11 @@ class SigninAction extends Action {
                 //boucle qui affiche les playlists de l'utilisateur
                 //un peu de la force brute mais on stock pas l'id de la playlist donc on doit aller le chercher pour chaque palylsit
                 foreach ($t as $k => $value) {
-                    $nom = $value->__get("nom");
+                    $nom = $value->__get('nom');
                     while($play=$dr->selectIDPlaylist($nom)){
                         $res.= '<a href="?action=display-playlist&id='.$play['id'].'"> - '.$nom.'</a>';
                     }
+                    echo $play;
                 }
             }
         }

@@ -20,8 +20,8 @@ class Auth {
 
         // check password ->exception
         if (!password_verify($p, $data['passwd'])) throw new AuthException("Mot de passe Incorrect");
-        $_SESSION['user']['email']=$e;
-        $_SESSION['user']['role']=$data['role'];
+        $_SESSION['email']=$e;
+        $_SESSION['role']=$data['role'];
 
         echo '<p>Vous êtes connecté !</p>';
 
@@ -33,6 +33,7 @@ class Auth {
 
         $d = DeefyRepository::getInstance();
         $res = false;
+
         // vérif si l'email existe dans la bd
         if($d->userExists($e)){
             echo '<p>Compte existant. Veuillez vous connecter</p>';
